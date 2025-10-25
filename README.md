@@ -117,7 +117,7 @@ Due to the sensitive nature of micro-benchmarking, results can be heavily influe
 
 <p align="right">
   <a href="https://donate.stripe.com/5kQ4gAa0b4pP7YQaW35EY00">
-    <img src="./stripe-donate-qrcode.png" 
+    <img src="./images/stripe-donate-qrcode.png" 
          alt="Scan to buy us a coffee with Stripe" 
          width="150" 
          height="150" 
