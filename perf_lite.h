@@ -258,7 +258,7 @@ public:
     // Runs the benchmark with a function and arguments.
     template<typename Func, typename... Args>
     BenchmarkResult run(Func&& func, Args&&... args) const {
-        auto wrapper = [&func, args...]() {
+        auto wrapper = [&func, args. ..]() {
             return func(args...);
         };
         return run(wrapper);
