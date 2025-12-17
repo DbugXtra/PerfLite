@@ -1,4 +1,4 @@
-#include "perf_lite.h"
+#include "../perf_lite.h"
 
 void simple_test_function() {
     volatile int x = 0;
