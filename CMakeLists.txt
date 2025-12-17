@@ -19,20 +19,6 @@ target_link_libraries(perf_lite_example pthread)
 # Add tests
 option(BUILD_TESTS "Build tests" ON)
 if(BUILD_TESTS)
-    # Find Google Test
-    find_package(GTest REQUIRED)
-    
-    # Create test executable
-    add_executable(perf_lite_tests test/benchmark_test.cpp)
-    
-    # Link with Google Test and PerfLite library
-    target_link_libraries(perf_lite_tests 
-        GTest::gtest 
-        GTest::gtest_main
-        perf_lite_example
-    )
-    
-    # Enable testing
-    enable_testing()
-    add_test(NAME perf_lite_tests COMMAND perf_lite_tests)
+    # Include the test directory
+    add_subdirectory(test)
 endif()
