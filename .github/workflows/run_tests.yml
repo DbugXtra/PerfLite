@@ -12,15 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Check out the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Ensure the script has execute permissions
+      - name: Install GoogleTest
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtest-dev
+          
       - name: Make script executable
         run: chmod +x ./test/run_tests.sh
 
-      # 3. Run the test script
       - name: Execute tests
         run: |
           cd ./test
