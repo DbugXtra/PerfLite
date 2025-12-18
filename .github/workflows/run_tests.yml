@@ -1,0 +1,25 @@
+name: Run Tests
+
+# Trigger the workflow on pushes or pull requests to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Ensure the script has execute permissions
+      - name: Make script executable
+        run: chmod +x ./test/run_tests.sh
+
+      # 3. Run the test script
+      - name: Execute tests
+        run: ./test/run_tests.sh
