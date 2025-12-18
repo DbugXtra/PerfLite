@@ -1,5 +1,5 @@
 [![Run Tests](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml/badge.svg?branch=main)](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml)
-<p align="right">
+<p align="left">
   <a href="https://donate.stripe.com/5kQ4gAa0b4pP7YQaW35EY00">
     <img src="./images/stripe-donate-qrcode.png" 
          alt="Scan to buy us a coffee with Stripe" 
