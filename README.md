@@ -1,4 +1,4 @@
-
+[![Run Tests](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml/badge.svg?branch=main)](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml)
 
 # PerfLite: A Minimalist C++ Micro-Benchmarking Library
 
