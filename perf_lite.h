@@ -29,15 +29,17 @@ enum class TimeUnit {
 // Throws an assertion if an invalid unit is provided.
 template<typename Duration>
 double to_unit(const Duration& d, TimeUnit unit) {
+    using namespace std::chrono;
+    
     switch (unit) {
         case TimeUnit::Nanoseconds:
-            return std::chrono::duration_cast<std::chrono::nanoseconds>(d).count();
+            return duration_cast<nanoseconds>(d).count();
         case TimeUnit::Microseconds:
-            return std::chrono::duration_cast<std::chrono::microseconds>(d).count();
+            return duration_cast<microseconds>(d).count();
         case TimeUnit::Milliseconds:
-            return std::chrono::duration_cast<std::chrono::milliseconds>(d).count();
+            return duration_cast<milliseconds>(d).count();
         case TimeUnit::Seconds:
-            return std::chrono::duration_cast<std::chrono::seconds>(d).count();
+            return duration_cast<seconds>(d).count();
         default:
             assert(false && "Invalid TimeUnit specified");
             return 0; // Unreachable, satisfies compiler
@@ -80,33 +82,44 @@ struct BenchmarkResult {
             return;
         }
 
-        // Calculate min
-        min_time = to_unit(*std::min_element(durations.begin(), durations.end()), time_unit);
-
-        // Calculate mean
-        auto sum = std::accumulate(durations.begin(), durations.end(), std::chrono::nanoseconds(0));
-        mean_time = to_unit(sum, time_unit) / durations.size();
-
-        // Calculate standard deviation
-        double variance = 0.0;
-        for (const auto& d : durations) {
-            double diff = to_unit(d, time_unit) - mean_time;
-            variance += diff * diff;
+        size_t n = durations.size();
+    
+        // 1. Convert EVERYTHING to a high-precision double (Nanoseconds) first
+        // This prevents 0.0002ms from becoming 0.
+        std::vector<double> values_ns;
+        for(const auto& d : durations) {
+            values_ns.push_back(static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(d).count()));
         }
-        if (durations.size() > 1) {
-            variance /= (durations.size() - 1);
-        } else {
-            variance = 0.0;
-        }
-        stddev_time = std::sqrt(variance);
 
-        // Calculate operations per second (avoid division by zero)
-        double mean_time_ns = to_unit(sum, TimeUnit::Nanoseconds) / durations.size();
-        if (mean_time_ns > 1e-9) {
-            ops_per_sec = 1e9 / mean_time_ns; // 1e9 ns = 1 second
-        } else {
-            ops_per_sec = 0.0;
+        // 2. Determine the conversion factor to the target unit
+        double divisor = 1.0;
+        if (time_unit == TimeUnit::Milliseconds) divisor = 1e6;
+        else if (time_unit == TimeUnit::Microseconds) divisor = 1e3;
+        else if (time_unit == TimeUnit::Nanoseconds) divisor = 1.0;
+        else divisor = 1e9; // Seconds
+
+        // 3. Calculate Stats using the double values
+        double sum_ns = std::accumulate(values_ns.begin(), values_ns.end(), 0.0);
+        double mean_ns = sum_ns / n;
+        
+        // Convert results to target unit
+        mean_time = mean_ns / divisor;
+        
+        auto min_it = std::min_element(values_ns.begin(), values_ns.end());
+        min_time = (*min_it) / divisor;
+
+        // 4. Variance with double precision
+        double variance_ns = 0.0;
+        for (double v : values_ns) {
+            variance_ns += (v - mean_ns) * (v - mean_ns);
         }
+        variance_ns /= (n > 1) ? (n - 1) : 1;
+        
+        // Convert StdDev to target unit
+        stddev_time = std::sqrt(variance_ns) / divisor;
+
+        // 5. Ops per second (Always use NS for this)
+        ops_per_sec = (mean_ns > 0) ? (1e9 / mean_ns) : 0.0;
     }
 
     // Prints results to the specified output stream with unit-appropriate precision.
