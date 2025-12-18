@@ -22,4 +22,6 @@ jobs:
 
       # 3. Run the test script
       - name: Execute tests
-        run: ./test/run_tests.sh
+        run: |
+          cd ./test
+          ./test/run_tests.sh
