@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "perf_lite.h"
+#include "../perf_lite.h"
 
 // Test that benchmark can be created and run
 TEST(BenchmarkTest, CanCreateAndRun) {

@@ -7,6 +7,9 @@ cd build
 # Configure with CMake
 cmake .. -DBUILD_TESTS=ON
 
+# Clean previous builds
+make clean
+
 # Build the project
 make
 
