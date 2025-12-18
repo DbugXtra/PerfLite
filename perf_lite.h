@@ -29,15 +29,17 @@ enum class TimeUnit {
 // Throws an assertion if an invalid unit is provided.
 template<typename Duration>
 double to_unit(const Duration& d, TimeUnit unit) {
+    using namespace std::chrono;
+    
     switch (unit) {
         case TimeUnit::Nanoseconds:
-            return std::chrono::duration_cast<std::chrono::nanoseconds>(d).count();
+            return duration_cast<nanoseconds>(d).count();
         case TimeUnit::Microseconds:
-            return std::chrono::duration_cast<std::chrono::microseconds>(d).count();
+            return duration_cast<microseconds>(d).count();
         case TimeUnit::Milliseconds:
-            return std::chrono::duration_cast<std::chrono::milliseconds>(d).count();
+            return duration_cast<milliseconds>(d).count();
         case TimeUnit::Seconds:
-            return std::chrono::duration_cast<std::chrono::seconds>(d).count();
+            return duration_cast<seconds>(d).count();
         default:
             assert(false && "Invalid TimeUnit specified");
             return 0; // Unreachable, satisfies compiler
@@ -118,7 +120,7 @@ struct BenchmarkResult {
         os << std::fixed << std::setprecision(precision);
         os << "Benchmark: " << name << "\n";
         os << "  Min:      " << min_time << " " << time_unit_to_string() << "\n";
-        os << "  Mean:     " << mean_time << " " << time_unit_to_string() << "\n";
+        os << "  Mean:     " << mean_time << " " << << time_unit_to_string() << "\n";
         os << "  StdDev:   " << stddev_time << " " << time_unit_to_string() << "\n";
         os << "  Ops/sec:  " << ops_per_sec << "\n\n";
     }
@@ -234,7 +236,7 @@ public:
             
             // Ensure minimum 1000 iterations and cap at 1,000,000 to prevent overflow/excessive runtime
             adjusted_iterations = std::max(adjusted_iterations, static_cast<uint64_t>(1000));
-            adjusted_iterations = std::min(adjusted_iterations, static_cast<uint64_t>(1'000'000));
+            adjusted_iterations = std::min(adjusted_iterations, static_cast<uint_cast<uint64_t>(1'000'000));
         }
 
         // Run actual benchmark
