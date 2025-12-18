@@ -83,7 +83,8 @@ struct BenchmarkResult {
         }
 
         // Calculate min
-        min_time = to_unit(*std::min_element(durations.begin(), durations.end()), time_unit);
+        auto min_duration = *std::min_element(durations.begin(), durations.end());
+        min_time = to_unit(min_duration, time_unit);
 
         // Calculate mean
         auto sum = std::accumulate(durations.begin(), durations.end(), std::chrono::nanoseconds(0));
