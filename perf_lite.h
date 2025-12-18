@@ -120,7 +120,7 @@ struct BenchmarkResult {
         os << std::fixed << std::setprecision(precision);
         os << "Benchmark: " << name << "\n";
         os << "  Min:      " << min_time << " " << time_unit_to_string() << "\n";
-        os << "  Mean:     " << mean_time << " " << << time_unit_to_string() << "\n";
+        os << "  Mean:     " << mean_time << " " << time_unit_to_string() << "\n";
         os << "  StdDev:   " << stddev_time << " " << time_unit_to_string() << "\n";
         os << "  Ops/sec:  " << ops_per_sec << "\n\n";
     }
@@ -236,7 +236,7 @@ public:
             
             // Ensure minimum 1000 iterations and cap at 1,000,000 to prevent overflow/excessive runtime
             adjusted_iterations = std::max(adjusted_iterations, static_cast<uint64_t>(1000));
-            adjusted_iterations = std::min(adjusted_iterations, static_cast<uint_cast<uint64_t>(1'000'000));
+            adjusted_iterations = std::min(adjusted_iterations, static_cast<uint64_t>(1'000'000));
         }
 
         // Run actual benchmark
