@@ -1,4 +1,15 @@
 [![Run Tests](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml/badge.svg?branch=main)](https://github.com/DbugXtra/PerfLite/actions/workflows/run_tests.yml)
+<p align="right">
+  <a href="https://donate.stripe.com/5kQ4gAa0b4pP7YQaW35EY00">
+    <img src="./images/stripe-donate-qrcode.png" 
+         alt="Scan to buy us a coffee with Stripe" 
+         width="150" 
+         height="150" 
+         style="border: 2px solid #6772E5; border-radius: 5px;">
+  </a>
+  <br>
+  <medium>Click or Scan to Buy us a Coffee</medium>
+</p>
 
 # PerfLite: A Minimalist C++ Micro-Benchmarking Library
 
@@ -114,15 +125,3 @@ Due to the sensitive nature of micro-benchmarking, results can be heavily influe
 3.  **Prevent Optimization:** Always use `PerfLite::DoNotOptimize` on the return value or any side effects of the code you are measuring to ensure the compiler doesn't eliminate the code entirely.
 
 <!-- end list -->
-
-<p align="right">
-  <a href="https://donate.stripe.com/5kQ4gAa0b4pP7YQaW35EY00">
-    <img src="./images/stripe-donate-qrcode.png" 
-         alt="Scan to buy us a coffee with Stripe" 
-         width="150" 
-         height="150" 
-         style="border: 2px solid #6772E5; border-radius: 5px;">
-  </a>
-  <br>
-  <medium>Click or Scan to Buy us a Coffee</medium>
-</p>
