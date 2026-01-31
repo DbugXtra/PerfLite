@@ -30,19 +30,22 @@ enum class TimeUnit {
 template<typename Duration>
 double to_unit(const Duration& d, TimeUnit unit) {
     using namespace std::chrono;
-    
+    // Convert the input duration to a double-valued nanoseconds count first,
+    // then scale to the requested unit. This preserves fractional precision
+    // (e.g., sub-microsecond values) rather than truncating to integer counts.
+    const double ns = std::chrono::duration_cast<std::chrono::duration<double, std::nano>>(d).count();
     switch (unit) {
         case TimeUnit::Nanoseconds:
-            return duration_cast<nanoseconds>(d).count();
+            return ns;
         case TimeUnit::Microseconds:
-            return duration_cast<microseconds>(d).count();
+            return ns / 1e3;
         case TimeUnit::Milliseconds:
-            return duration_cast<milliseconds>(d).count();
+            return ns / 1e6;
         case TimeUnit::Seconds:
-            return duration_cast<seconds>(d).count();
+            return ns / 1e9;
         default:
             assert(false && "Invalid TimeUnit specified");
-            return 0; // Unreachable, satisfies compiler
+            return 0.0; // Unreachable, satisfies compiler
     }
 }
 
@@ -63,7 +66,7 @@ inline void DoNotOptimize(T& value) {
 // Structure to hold benchmark results and compute statistics.
 struct BenchmarkResult {
     std::string name;
-    std::vector<std::chrono::nanoseconds> durations;
+    std::vector<std::chrono::duration<double, std::nano>> durations;
     double min_time;
     double mean_time;
     double stddev_time;
@@ -88,7 +91,7 @@ struct BenchmarkResult {
         // This prevents 0.0002ms from becoming 0.
         std::vector<double> values_ns;
         for(const auto& d : durations) {
-            values_ns.push_back(static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(d).count()));
+            values_ns.push_back(d.count());
         }
 
         // 2. Determine the conversion factor to the target unit
@@ -215,18 +218,18 @@ public:
         }
 
         // Measure execution time for 1000 iterations to estimate per-iteration time
-        auto start = std::chrono::high_resolution_clock::now();
+        auto measure_start = std::chrono::high_resolution_clock::now();
         for (size_t i = 0; i < 1000; ++i) {
             if constexpr (std::is_same_v<std::invoke_result_t<Func>, void>) {
                 func();
                 std::atomic_thread_fence(std::memory_order_seq_cst); // Memory barrier for void functions
             } else {
-                auto result = func();
-                DoNotOptimize(result);
+                auto func_result_measure = func();
+                DoNotOptimize(func_result_measure);
             }
         }
-        auto end = std::chrono::high_resolution_clock::now();
-        auto total_time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        auto measure_end = std::chrono::high_resolution_clock::now();
+        auto total_time = std::chrono::duration_cast<std::chrono::nanoseconds>(measure_end - measure_start);
 
         uint64_t adjusted_iterations = iterations_;
 
@@ -252,16 +255,16 @@ public:
 
         // Run actual benchmark
         for (size_t i = 0; i < adjusted_iterations; ++i) {
-            auto start = std::chrono::high_resolution_clock::now();
+            auto iter_start = std::chrono::high_resolution_clock::now();
             if constexpr (std::is_same_v<std::invoke_result_t<Func>, void>) {
                 func();
                 std::atomic_thread_fence(std::memory_order_seq_cst); // Memory barrier for void functions
             } else {
-                auto result = func();
-                DoNotOptimize(result);
+                auto func_result_iter = func();
+                DoNotOptimize(func_result_iter);
             }
-            auto end = std::chrono::high_resolution_clock::now();
-            result.durations.push_back(end - start);
+            auto iter_end = std::chrono::high_resolution_clock::now();
+            result.durations.push_back(std::chrono::duration<double, std::nano>(iter_end - iter_start));
         }
 
         result.calculate_statistics();
