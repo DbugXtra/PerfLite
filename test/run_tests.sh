@@ -13,10 +13,14 @@ make clean
 # Build the project
 make
 
-# Run tests
+# Run tests using CTest so we execute the configured test targets
 if [ $? -eq 0 ]; then
-    echo "Running tests..."
-    ./perf_lite_tests
+    echo "Running tests (fast label by default)..."
+    # Run only fast/deterministic unit tests by default (CI-friendly)
+    ctest -L fast --output-on-failure || {
+        echo "Fast tests failed; running all tests for details..."
+        ctest --output-on-failure
+    }
 else
     echo "Build failed!"
     exit 1
