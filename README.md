@@ -165,5 +165,3 @@ Notes:
 - Fixed local variable shadowing in `Benchmark::run` (renamed temporary timing/result variables for clarity and safety).
 - Tests: Added deterministic unit tests for `to_unit` and `BenchmarkResult::calculate_statistics`, plus edge-case tests (empty lambda, death tests for zero warmup/iterations, exception propagation, and time-unit ordering).
 - CMake: test `CMakeLists.txt` now fetches GoogleTest automatically if it's not available on the system, making it easier to run tests without installing gtest manually.
-
-If you'd like, I can also remove the placeholder top-level `main.cpp` that was temporarily added to satisfy the example target; it is not required for the library or tests and can be removed for a cleaner repository.
