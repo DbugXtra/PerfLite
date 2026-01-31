@@ -125,3 +125,45 @@ Due to the sensitive nature of micro-benchmarking, results can be heavily influe
 3.  **Prevent Optimization:** Always use `PerfLite::DoNotOptimize` on the return value or any side effects of the code you are measuring to ensure the compiler doesn't eliminate the code entirely.
 
 <!-- end list -->
+
+-----
+
+## 🧪 Build & Tests
+
+This project uses CMake. The test suite integrates GoogleTest. If GoogleTest is not installed on your system, CMake will automatically fetch and build it using FetchContent.
+
+Recommended local workflow:
+
+```bash
+# create a build directory and configure
+mkdir -p build && cd build
+cmake ..
+
+# build everything
+make -j
+
+# Run only fast, deterministic unit tests (recommended for CI)
+ctest -L fast --output-on-failure
+
+# Run all tests (includes benchmark-style tests)
+ctest --output-on-failure
+
+# Or run the test executables directly
+./build/test/perf_lite_unit_tests
+./build/test/perf_lite_benchmarks
+```
+
+Notes:
+- The test suite is split into two executables: `perf_lite_unit_tests` (fast, deterministic unit tests) and `perf_lite_benchmarks` (benchmark/integration-style tests that exercise timing behavior).
+- Use `ctest -L fast` to execute only the quick unit tests in CI to avoid flaky timing-sensitive runs.
+- If you prefer a system-installed GoogleTest, set `CMAKE_PREFIX_PATH` or install `googletest` via your package manager; CMake will prefer an existing package over downloading.
+
+## 📝 Recent meaningful changes (user-facing)
+
+- `to_unit()` now returns double-precision converted values and preserves fractional precision (previous implementation used integer casts which truncated sub-unit values).
+- Benchmark durations are recorded as `std::chrono::duration<double, std::nano>` to preserve fractional-nanosecond precision.
+- Fixed local variable shadowing in `Benchmark::run` (renamed temporary timing/result variables for clarity and safety).
+- Tests: Added deterministic unit tests for `to_unit` and `BenchmarkResult::calculate_statistics`, plus edge-case tests (empty lambda, death tests for zero warmup/iterations, exception propagation, and time-unit ordering).
+- CMake: test `CMakeLists.txt` now fetches GoogleTest automatically if it's not available on the system, making it easier to run tests without installing gtest manually.
+
+If you'd like, I can also remove the placeholder top-level `main.cpp` that was temporarily added to satisfy the example target; it is not required for the library or tests and can be removed for a cleaner repository.
