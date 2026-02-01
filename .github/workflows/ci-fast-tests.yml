@@ -33,16 +33,17 @@ jobs:
           brew update
           brew install cmake git
 
-      - name: Configure
+      - name: Configure (out-of-source)
         run: |
-          mkdir -p build
-          cd build
-          cmake ..
+          # Remove stale cache that can be left from other runners
+          rm -f CMakeCache.txt
+          rm -rf CMakeFiles
+          # Configure with an out-of-source build directory to avoid polluting the repo root
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: |
-          cd build
-          cmake --build . --config Release -- -j$(nproc || sysctl -n hw.ncpu)
+          cmake --build build --config Release -- -j$(nproc || sysctl -n hw.ncpu)
 
       - name: Run fast unit tests
         run: |
