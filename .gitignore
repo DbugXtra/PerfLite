@@ -42,8 +42,15 @@
 .aider*
 
 .DS_Store
+perf_lite_example
+perf_lite_benchmarks
+perf_lite_unit_tests
 
 test/build/
 build/
 CMakeFiles/
 audit_reports/
+_deps/
+lib/
+Testing/
+coverage.info

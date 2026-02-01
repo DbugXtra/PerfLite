@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /code && $(CMAKE_COMMAND) -E cmake_progress_start /code/CMakeFiles /code/test//CMakeFiles/progress.marks
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /code/CMakeFiles /code//CMakeFiles/progress.marks
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /code/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/clean
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -148,77 +148,116 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /code && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-test/CMakeFiles/perf_lite_unit_tests.dir/rule:
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/perf_lite_unit_tests.dir/rule
-.PHONY : test/CMakeFiles/perf_lite_unit_tests.dir/rule
+#=============================================================================
+# Target rules for targets named perf_lite_example
 
-# Convenience name for target.
-perf_lite_unit_tests: test/CMakeFiles/perf_lite_unit_tests.dir/rule
+# Build rule for target.
+perf_lite_example: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 perf_lite_example
+.PHONY : perf_lite_example
+
+# fast build rule for target.
+perf_lite_example/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perf_lite_example.dir/build.make CMakeFiles/perf_lite_example.dir/build
+.PHONY : perf_lite_example/fast
+
+#=============================================================================
+# Target rules for targets named perf_lite_unit_tests
+
+# Build rule for target.
+perf_lite_unit_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 perf_lite_unit_tests
 .PHONY : perf_lite_unit_tests
 
 # fast build rule for target.
 perf_lite_unit_tests/fast:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_unit_tests.dir/build.make test/CMakeFiles/perf_lite_unit_tests.dir/build
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_unit_tests.dir/build.make test/CMakeFiles/perf_lite_unit_tests.dir/build
 .PHONY : perf_lite_unit_tests/fast
 
-# Convenience name for target.
-test/CMakeFiles/perf_lite_benchmarks.dir/rule:
-	cd /code && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/perf_lite_benchmarks.dir/rule
-.PHONY : test/CMakeFiles/perf_lite_benchmarks.dir/rule
+#=============================================================================
+# Target rules for targets named perf_lite_benchmarks
 
-# Convenience name for target.
-perf_lite_benchmarks: test/CMakeFiles/perf_lite_benchmarks.dir/rule
+# Build rule for target.
+perf_lite_benchmarks: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 perf_lite_benchmarks
 .PHONY : perf_lite_benchmarks
 
 # fast build rule for target.
 perf_lite_benchmarks/fast:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/build
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/build
 .PHONY : perf_lite_benchmarks/fast
 
-benchmark_test.o: benchmark_test.cpp.o
-.PHONY : benchmark_test.o
+#=============================================================================
+# Target rules for targets named gmock
 
-# target to build an object file
-benchmark_test.cpp.o:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/benchmark_test.cpp.o
-.PHONY : benchmark_test.cpp.o
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
 
-benchmark_test.i: benchmark_test.cpp.i
-.PHONY : benchmark_test.i
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
 
-# target to preprocess a source file
-benchmark_test.cpp.i:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/benchmark_test.cpp.i
-.PHONY : benchmark_test.cpp.i
+#=============================================================================
+# Target rules for targets named gmock_main
 
-benchmark_test.s: benchmark_test.cpp.s
-.PHONY : benchmark_test.s
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
 
-# target to generate assembly for a file
-benchmark_test.cpp.s:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/benchmark_test.cpp.s
-.PHONY : benchmark_test.cpp.s
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perf_lite_example.dir/build.make CMakeFiles/perf_lite_example.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -226,7 +265,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perf_lite_example.dir/build.make CMakeFiles/perf_lite_example.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -234,32 +273,8 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_benchmarks.dir/build.make test/CMakeFiles/perf_lite_benchmarks.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/perf_lite_example.dir/build.make CMakeFiles/perf_lite_example.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-unit_tests.o: unit_tests.cpp.o
-.PHONY : unit_tests.o
-
-# target to build an object file
-unit_tests.cpp.o:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_unit_tests.dir/build.make test/CMakeFiles/perf_lite_unit_tests.dir/unit_tests.cpp.o
-.PHONY : unit_tests.cpp.o
-
-unit_tests.i: unit_tests.cpp.i
-.PHONY : unit_tests.i
-
-# target to preprocess a source file
-unit_tests.cpp.i:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_unit_tests.dir/build.make test/CMakeFiles/perf_lite_unit_tests.dir/unit_tests.cpp.i
-.PHONY : unit_tests.cpp.i
-
-unit_tests.s: unit_tests.cpp.s
-.PHONY : unit_tests.s
-
-# target to generate assembly for a file
-unit_tests.cpp.s:
-	cd /code && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/perf_lite_unit_tests.dir/build.make test/CMakeFiles/perf_lite_unit_tests.dir/unit_tests.cpp.s
-.PHONY : unit_tests.cpp.s
 
 # Help Target
 help:
@@ -273,17 +288,16 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... gmock"
+	@echo "... gmock_main"
+	@echo "... gtest"
+	@echo "... gtest_main"
 	@echo "... perf_lite_benchmarks"
+	@echo "... perf_lite_example"
 	@echo "... perf_lite_unit_tests"
-	@echo "... benchmark_test.o"
-	@echo "... benchmark_test.i"
-	@echo "... benchmark_test.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... unit_tests.o"
-	@echo "... unit_tests.i"
-	@echo "... unit_tests.s"
 .PHONY : help
 
 
@@ -295,6 +309,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /code && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
